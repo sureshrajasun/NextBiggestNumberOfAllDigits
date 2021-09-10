@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class NextBiggestNumberOfADigit {
 
     /**
@@ -34,7 +37,59 @@ public class NextBiggestNumberOfADigit {
         System.out.println("******** This application is to find the next biggest number of the given digits *******");
         System.out.println("                Please key in 'Stop' or press CTRL + C to Quit.                             ");
         System.out.println("-----------------------------------------------------------------------------------------\n  ");
+
+        Scanner in = new Scanner(System.in);
+        String wholeNumber = "798756897657879765758";
+
+        int[] digits = Arrays.stream(wholeNumber.split("")).mapToInt(Integer::parseInt).toArray();
+
+        //Step 1 : If your digits in the given number are sorted in descending order, there is no greater number with the same set of digits.
+        if (isSorted (digits, digits.length)) {
+            System.out.print(wholeNumber + " This is the biggest number.");
+            System.exit(0);
+        }
+
+        //Step 2 : Traverse the given number from the rightmost digit. Keep traversing till you get a digit which is smaller than the previously traversed digit.
+        int firstSmallest = 0;
+        for (int i = digits.length-1; i >= 0; i--) {
+            if(i > 1 && (digits[i] > digits[i-1]) ){
+                firstSmallest =  i - 1;
+                break;
+            }
+        }
+
+        //Step 3 :Swap the two digits found in the above step.
+        int[] swapped = swapArrayElements(digits, firstSmallest, digits.length - 1);
+
+        //Step 4 : Sort all the digits right side of the number that found in Step 2.
+        Arrays.sort(swapped, firstSmallest + 1, swapped.length);
+
+        Arrays.stream(swapped).forEach(System.out::print);
     }
+
+        public static boolean isNumeric(String str) {
+            return str != null && str.matches("[-+]?\\d*\\.?\\d+");
+        }
+
+        private static boolean isSorted (int[] digits, int index) {
+            if (digits == null || digits.length <= 1 || index == 1) {
+                return true;
+            }
+
+            if (digits[index - 1] > digits[index - 2]) {
+                return false;
+            }
+
+            return isSorted(digits, index - 1);
+        }
+
+
+        public static int[] swapArrayElements(int[] A, int from, int to){
+            int temp = A[from];
+            A[from] = A[to];
+            A[to] = temp;
+            return A;
+        }
 
 
 }
