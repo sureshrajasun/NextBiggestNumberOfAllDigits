@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -33,6 +35,7 @@ import java.util.Scanner;
 
 public class NextBiggestNumberOfADigit {
     public static void main(String[] args) {
+        NextBiggestNumberOfADigit nextBiggestNumberOfADigit = new NextBiggestNumberOfADigit();
         System.out.print("\033[1;33m");
         System.out.println("******** This application is to find the next biggest number of the given digits *******"    );
         System.out.println("                Please key in 'Stop' or press CTRL + C to Quit.                             ");
@@ -44,17 +47,15 @@ public class NextBiggestNumberOfADigit {
             System.out.print("Please enter a number to find it's next biggest number of it's digits : ");
             wholeNumber = in.nextLine();
             if (isNumeric(wholeNumber)){
-                int[] nextBiggestNumber = findNextBiggestNumberOfDigits(wholeNumber);
-                if(nextBiggestNumber == null){
+                String nextBiggest = nextBiggestNumberOfADigit.getNextBigNumber(wholeNumber);
+                if(wholeNumber.equals(nextBiggest)) {
                     System.out.print("\033[1;92m");
                     System.out.print(wholeNumber + " This is the biggest number.");
                     System.out.print("\033[0m");
                 }else {
                     System.out.print("The nest biggest number of the whole digit is : ");
+                    System.out.println(nextBiggest);
                     System.out.print("\033[1;92m");
-                    //System.out.print("\033[46m");
-                    Arrays.stream(nextBiggestNumber).forEach(System.out::print);
-                    System.out.print("\033[0m");
                 }
             }else{
                 if(!wholeNumber.equalsIgnoreCase("stop")) {
@@ -68,11 +69,19 @@ public class NextBiggestNumberOfADigit {
         }
     }
 
-    public static boolean isNumeric(String str) {
-        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
+    public String getNextBigNumber(String wholeNumber) {
+        int[] nextBiggestNumber = findNextBiggestNumberOfDigits(wholeNumber);
+        if(nextBiggestNumber == null){
+            return wholeNumber;
+        }else {
+            Stream<String> numberToString = Arrays.stream(Arrays.stream(nextBiggestNumber)
+                    .mapToObj(String::valueOf)
+                    .toArray(String[]::new));
+            return numberToString.collect(Collectors.joining(""));
+        }
     }
 
-    private static int[] findNextBiggestNumberOfDigits(String wholeNumber){
+    private int[] findNextBiggestNumberOfDigits(String wholeNumber){
 
         int[] digits = Arrays.stream(wholeNumber.split("")).mapToInt(Integer::parseInt).toArray();
 
@@ -94,7 +103,11 @@ public class NextBiggestNumberOfADigit {
 
     }
 
-    private static boolean isSorted (int[] digits, int index) {
+    public static boolean isNumeric(String str) {
+        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
+    }
+
+    private boolean isSorted (int[] digits, int index) {
         if (digits == null || digits.length <= 1 || index == 1) {
             return true;
         }
@@ -104,7 +117,7 @@ public class NextBiggestNumberOfADigit {
         return isSorted(digits, index - 1);
     }
 
-    private static int findFirstSmallestFromRight(int[] digits){
+    private int findFirstSmallestFromRight(int[] digits){
         for (int i = digits.length-1; i >= 0; i--) {
             if(i > 1 && (digits[i] > digits[i-1]) ){
 
@@ -115,7 +128,7 @@ public class NextBiggestNumberOfADigit {
     }
 
 
-    public static int[] swapArrayElements(int[] A, int from, int to){
+    public int[] swapArrayElements(int[] A, int from, int to){
         int temp = A[from];
         A[from] = A[to];
         A[to] = temp;

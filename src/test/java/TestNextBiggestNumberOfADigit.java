@@ -1,21 +1,27 @@
+import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 
 public class TestNextBiggestNumberOfADigit {
-    @Test
-    public void validNumber() {
-        System.out.println("Tested");
+
+    private static NextBiggestNumberOfADigit nextBiggestNumberOfADigit;
+
+    @BeforeClass
+    public static void setUpFixture() {
+        nextBiggestNumberOfADigit = new NextBiggestNumberOfADigit();
     }
-    @Test
-    public void invalidNumber() {
-        System.out.println("Tested");
-    }
+
     @Test
     public void noBiggestNumber() {
-        System.out.println("Tested");
+        assertEquals("9876", nextBiggestNumberOfADigit.getNextBigNumber("9876"));
+        assertEquals("76543", nextBiggestNumberOfADigit.getNextBigNumber("76543"));
     }
     @Test
     public void nextBiggestNumber() {
-        System.out.println("Tested");
+        assertEquals("12354", nextBiggestNumberOfADigit.getNextBigNumber("12345"));
+        assertEquals("45687654323456765432123434556", nextBiggestNumberOfADigit.getNextBigNumber("45687654323456765432123456543"));
+        assertEquals("6543243", nextBiggestNumberOfADigit.getNextBigNumber("6543234"));
     }
 
 }
