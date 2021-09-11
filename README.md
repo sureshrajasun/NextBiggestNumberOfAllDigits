@@ -9,6 +9,7 @@ Run the program using Maven.
  
         Clone the project.
             $> git clone -b dev https://github.com/sureshrajasun/NextBiggestNumberOfAllDigits.git
+            $> cd NextBiggestNumberOfAllDigits
         Run the below command.
             $> mvn test
 
