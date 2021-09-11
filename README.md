@@ -1,4 +1,4 @@
-# NextBiggestNumberOfAllDigits
+# Next Biggest Number Of All Digits in  Java
 
 This app is to find the next biggest number of the given Number.
 
