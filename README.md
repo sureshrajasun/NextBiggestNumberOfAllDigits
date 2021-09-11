@@ -29,7 +29,7 @@ Run the program using Maven.
     
     
     Please enter a number to find it's next biggest number of it's digits : rhrt
-     ' rhrt ' is not a number, Please try again with a number.
+     'rhrt' is not a number, Please try again with a number.
     
     
     Please enter a number to find it's next biggest number of it's digits : 76543

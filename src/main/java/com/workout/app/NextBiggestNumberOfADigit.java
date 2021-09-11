@@ -30,44 +30,57 @@ import java.util.stream.Stream;
  * Special Cases to Find Next Greater Number with Same Set of Digits:
  * If your digits in the given number are sorted in descending order, there is no greater number with the same set of digits.
  * Example: Suppose the given number is 7432. It is the greatest number in the set of (7, 4, 3, 2). So there is no next greater number.
+ *
  * If your digits in the given number are sorted in ascending order, you just need to swap last to digits of a given number.
  * Example: Suppose the given number is 2356. Swap the last to digits, you will get next greater number as 2365.
  *
  * **/
 
 public class NextBiggestNumberOfADigit {
+
+    private final static String GREEN_BOLD  =   "\033[1;92m";
+    private final static String RED_BOLD    =   "\033[1;91m";
+    private final static String YELLOW_BOLD =   "\033[1;33m";
+    private final static String STYLE_RESET =   "\033[0m";
+
+    private final static String STOP_APP =   "stop";
+
     public static void main(String[] args) {
+
         NextBiggestNumberOfADigit nextBiggestNumberOfADigit = new NextBiggestNumberOfADigit();
-        System.out.print("\033[1;33m");
+
+        System.out.print(YELLOW_BOLD);
         System.out.println("******** This application is to find the next biggest number of the given digits *******"    );
         System.out.println("                Please key in 'Stop' or press CTRL + C to Quit.                             ");
         System.out.println("-----------------------------------------------------------------------------------------\n  ");
-        System.out.print("\033[0m");
+        System.out.print(STYLE_RESET);
+
         Scanner in = new Scanner(System.in);
         String wholeNumber = "";
-        while (!wholeNumber.equalsIgnoreCase("stop")){
+
+        while (!wholeNumber.equalsIgnoreCase(STOP_APP)){
             System.out.print("Please enter a number to find it's next biggest number of it's digits : ");
             wholeNumber = in.nextLine();
             if (isNumeric(wholeNumber)){
                 String nextBiggest = nextBiggestNumberOfADigit.getNextBigNumber(wholeNumber);
+                
                 if(wholeNumber.equals(nextBiggest)) {
-                    System.out.print("\033[1;92m");
+                    System.out.print(GREEN_BOLD);
                     System.out.println(String.format(" '%s' This is the biggest number. There is no next biggest.", wholeNumber));
-                    System.out.print("\033[0m");
                 }else {
                     System.out.print("The nest biggest number of the whole digit is : ");
+                    System.out.print(GREEN_BOLD);
                     System.out.println(nextBiggest);
-                    System.out.print("\033[1;92m");
                 }
+
             }else{
                 if(!wholeNumber.equalsIgnoreCase("stop")) {
-                    System.out.print("\033[1;91m");
-                    //System.out.print("\033[41m");
-                    System.out.println(String.format(" ' %s ' is not a number, Please try again with a number.", wholeNumber));
-                    System.out.print("\033[0m");
+                    System.out.print(RED_BOLD);
+                    System.out.println(String.format(" '%s' is not a number, Please try again with a number.", wholeNumber));
+                   
                 }
             }
-            System.out.println("\n");
+            System.out.println(STYLE_RESET);
         }
     }
 
@@ -76,6 +89,7 @@ public class NextBiggestNumberOfADigit {
         if(nextBiggestNumber == null){
             return wholeNumber;
         }else {
+            // Change array of int numbers into a String.
             Stream<String> numberToString = Arrays.stream(Arrays.stream(nextBiggestNumber)
                     .mapToObj(String::valueOf)
                     .toArray(String[]::new));
@@ -122,7 +136,6 @@ public class NextBiggestNumberOfADigit {
     private int findFirstSmallestFromRight(int[] digits){
         for (int i = digits.length-1; i >= 0; i--) {
             if(i > 1 && (digits[i] > digits[i-1]) ){
-
                 return i - 1;
             }
         }
@@ -130,10 +143,10 @@ public class NextBiggestNumberOfADigit {
     }
 
 
-    public int[] swapArrayElements(int[] A, int from, int to){
-        int temp = A[from];
-        A[from] = A[to];
-        A[to] = temp;
-        return A;
+    public int[] swapArrayElements(int[] numArray, int from, int to){
+        int temp = numArray[from];
+        numArray[from] = numArray[to];
+        numArray[to] = temp;
+        return numArray;
     }
 }
