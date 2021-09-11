@@ -52,7 +52,7 @@ public class NextBiggestNumberOfADigit {
                 String nextBiggest = nextBiggestNumberOfADigit.getNextBigNumber(wholeNumber);
                 if(wholeNumber.equals(nextBiggest)) {
                     System.out.print("\033[1;92m");
-                    System.out.print(wholeNumber + " This is the biggest number.");
+                    System.out.println(String.format(" '%s' This is the biggest number. There is no next biggest.", wholeNumber));
                     System.out.print("\033[0m");
                 }else {
                     System.out.print("The nest biggest number of the whole digit is : ");
